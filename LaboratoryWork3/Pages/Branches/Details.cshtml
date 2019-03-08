@@ -1,0 +1,62 @@
+﻿@page
+@model LaboratoryWork3.Pages.Branches.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Branch</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Name
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Branch.name)
+        </dd>
+    </dl>
+    @if (Model.Branch.Branches != null)
+    {
+        <dl class="row">
+            <dt class="col-sm-2">
+                SubBranches
+            </dt>
+            <dd class="col-sm-10">
+
+                <ul>
+                    @foreach (var br in Model.Branch.Branches)
+                    {
+                        <li>@br.name</li>
+                    }
+                </ul>
+
+            </dd>
+        </dl>
+    }
+    @if (Model.Branch.Employees != null)
+    {
+
+        <dl class="row">
+            <dt class="col-sm-2">
+                SubEmployees
+            </dt>
+            <dd class="col-sm-10">
+
+                <ul>
+                    @foreach (var emp in Model.Branch.Employees)
+                    {
+                        <li>@emp.name</li>
+                    }
+                </ul>
+
+            </dd>
+        </dl>
+    }
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Branch.id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

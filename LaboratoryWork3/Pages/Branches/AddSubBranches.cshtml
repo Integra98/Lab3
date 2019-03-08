@@ -1,0 +1,44 @@
+﻿@page
+@model LaboratoryWork3.Pages.Branches.AddSubBranchesModel
+@{
+    ViewData["Title"] = "AddSubBranches";
+}
+
+<h1>AddSubBranches</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Branch.id" />
+            <div class="form-group">
+                <label class="control-label">Name</label>
+                <input asp-for="Branch.name" class="form-control" />
+                <span asp-validation-for="Branch.name" class="text-danger"></span>
+            </div>
+            <h4>Add branch</h4>
+            <table>
+                @foreach (var br in Model.Branches)
+                {
+                    @if (br.id != Model.Branch.id)
+                    {
+                        <tr>
+                            <td name="empId">@br.id</td>
+                            <td>@br.name</td>
+                            <td>
+
+                                <input type="submit" asp-page-handler="pushEmployee" asp-route-empId="@br.id" value="+" class="btn btn-success" />
+
+                            </td>
+                        </tr>
+                    }
+
+                }
+            </table>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>

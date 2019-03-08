@@ -1,0 +1,41 @@
+﻿@page
+@model LaboratoryWork3.Pages.Tasks.AddToEmployeeModel
+@{
+    ViewData["Title"] = "AddToEmployee";
+}
+
+<h1>AddToEmployee</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Task.id" />
+            <div class="form-group">
+                <label asp-for="Task.name" class="control-label"></label>
+                <input asp-for="Task.name" class="form-control" />
+                <span asp-validation-for="Task.name" class="text-danger"></span>
+            </div>
+            <h4>Add employees</h4>
+            <table>
+                @foreach (var emp in Model.Employees)
+                {
+                    <tr>
+                        <td name="empId">@emp.id</td>
+                        <td>@emp.name</td>
+                        <td>
+
+                            <input type="submit" asp-page-handler="pushEmployee" asp-route-empId="@emp.id" value="+" class="btn btn-success" />
+
+                        </td>
+                    </tr>
+                }
+            </table>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+

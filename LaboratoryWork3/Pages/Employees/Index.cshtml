@@ -1,0 +1,117 @@
+﻿@page
+@model LaboratoryWork3.Pages.Employees.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+<style>
+    .treeHTML {
+        line-height: normal;
+    }
+
+        .treeHTML details {
+            display: block;
+        }
+
+        .treeHTML div {
+            position: relative;
+            margin: 0 0 0 .5em;
+            padding: 0 0 0 1.2em;
+        }
+
+            .treeHTML div:not(:last-child) { /* необязательно */
+                border-left: 1px solid #ccc;
+            }
+
+            .treeHTML div:before { /* необязательно */
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 1.1em;
+                height: .5em;
+                border-bottom: 1px solid #ccc;
+            }
+
+            .treeHTML div:last-child:before { /* необязательно */
+                border-left: 1px solid #ccc;
+            }
+
+        .treeHTML summary { /* стилями можно задать любую форму, например, тот же плюс. Я специально не стала усложнять, чтобы можно было проще разобраться в коде */
+            position: absolute;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+        }
+
+        .treeHTML details[open] summary { /* убрать рамку при фокусе */
+            outline: none;
+        }
+</style>
+
+<h1>List of Employees</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th> Count of SubEmployees</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Employee)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Employees.Count)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.id">Details</a> |
+                <a asp-page="./AddSubEmployees" asp-route-id="@item.id">Add like SubEmployee</a> |
+                <a asp-page="./AddToBranch" asp-route-id="@item.id">Add to Branch</a> |
+                <a asp-page="./Delete" asp-route-id="@item.id">Delete</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+<hr/>
+<h2>Structure</h2>
+@foreach (var employee in Model.Employee)
+{<div class="treeHTML">
+        <div>
+            @employee.name
+            <details>
+                <summary></summary>
+                @if (employee.Employees != null)
+                {
+                    <div>
+                        Employees
+
+                        @foreach (var emp in employee.Employees)
+                        {
+                            <div class="treeHTML">
+                                @emp.name
+                            </div>
+                        }
+
+
+
+                    </div>
+                }
+   
+            </details>
+        </div>
+    </div>
+
+}
